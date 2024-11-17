@@ -24,33 +24,33 @@ import cv2
 import numpy as np
 
 def histogram_equalization(img):
-    # 初始化直方圖矩陣
+    
     hist = np.zeros((3, 256), dtype=int)
 
-    # 分離 RGB 通道
+    #spilt the R G B channel 
     R, G, B = cv2.split(img)
 
-    # 初始化等化後的通道
+  
     R_eq = np.zeros_like(R)
     G_eq = np.zeros_like(G)
     B_eq = np.zeros_like(B)
 
-    # 遍歷每個通道
+    
     for i, channel in enumerate([R, G, B]):
-        # 計算當前通道的直方圖
+        # calculate histogram using calcHist
         temp = cv2.calcHist([channel], [0], None, [256], [0, 256]).flatten()
-        hist[i, :] = temp  # 更新到直方圖矩陣
+        hist[i, :] = temp  #update the hist
 
-        # 計算累積分佈函數 (CDF)
+        # calculate cdf
         cdf = np.cumsum(temp)
         cdf_min = cdf[np.nonzero(cdf)].min()
         cdf_normalized = (cdf - cdf_min) / (cdf[-1] - cdf_min) * 255
         cdf_normalized = cdf_normalized.astype('uint8')
 
-        # 映射像素值
+        # transform the cdf to channel
         equalized_channel = cdf_normalized[channel]
 
-        # 更新等化後的通道
+        # update the equalized channel 
         if i == 0:
             R_eq = equalized_channel
         elif i == 1:
