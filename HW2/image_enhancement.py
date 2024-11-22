@@ -58,7 +58,7 @@ def histogram_equalization(img):
         else:
             B_eq = equalized_channel
 
-    # 合併等化後的 RGB 通道
+    
     equalized_img = cv2.merge([R_eq, G_eq, B_eq])
 
     return equalized_img

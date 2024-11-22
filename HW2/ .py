@@ -13,8 +13,8 @@ def generate_motion_blur_psf(img, imgnum):
         angle = 30
         length = 20
     else:
-        angle = 15
-        length = 10
+        angle = 35
+        length = 20
 
    
     psf = np.zeros(shape)
